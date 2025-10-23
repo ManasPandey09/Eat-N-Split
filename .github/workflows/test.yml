@@ -23,6 +23,10 @@ jobs:
           NEW_VERSION="v${MAJOR}.${MINOR}.$((PATCH+1))"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "Next version: $NEW_VERSION"
+      - name: Configure Git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Create Git tag
         run: |
