@@ -1,7 +1,10 @@
 name: Test Release (No Deploy)
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # run manually from Actions tab
+
+permissions:
+  contents: write     # ✅ allows pushing tags & creating releases
 
 jobs:
   create-release:
@@ -10,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # ensure tags are visible
 
       - name: Auto-create version tag
         id: version
@@ -23,6 +26,7 @@ jobs:
           NEW_VERSION="v${MAJOR}.${MINOR}.$((PATCH+1))"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "Next version: $NEW_VERSION"
+
       - name: Configure Git identity
         run: |
           git config --global user.name "github-actions[bot]"
